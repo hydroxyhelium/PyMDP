@@ -5,6 +5,8 @@ from reward import Reward
 from policy import Policy
 import random
 
+import numpy as np
+
 random.seed(0)
 
 
@@ -34,6 +36,36 @@ class MDP:
     def change_mapping(self, mapping) -> None:
         self.policy = Policy(mapping)
         return
+
+    def evaluate_policy_finite(self, p:Policy, horizon: int, state: str) -> int:
+        state_list = list(self.S)
+
+        hashmap = {} ## maps states to integer to construct a DP table
+
+        for index, value in enumerate(state_list):
+            hashmap[index]= value         
+
+        ## we generate a DP table
+        dp_table = [ [0 for i in range(len(state_list))] for j in range(horizon+1)]
+
+        for i in range(1, horizon):
+            for j in range(len(state_list)):
+
+                temp = 0 
+                for l in range(len(state_list)):
+                    temp += self.tf.get_transition_values(hashmap[j], p.get_action(hashmap[j]), hashmap[l])*dp_table[i-1][l]
+
+                dp_table[i][j] = self.r.get_reward(hashmap[j], p.get_action(hashmap[j]))+temp
+
         
-    def evaluate_policy_finite(self, ):
+        index_associated = state_list.index(state)
+
+        final_res_temp = 0
+
+        for i in range(len(state_list)):
+            final_res_temp =  self.tf.get_transition_values(state, p.get_action(state), hashmap[i])*dp_table[horizon-1][i]
+        
+        dp_table[horizon][index_associated] = self.r.get_reward(state, p.get_action(state))+final_res_temp  
+
+        return dp_table[horizon][index_associated] 
     
