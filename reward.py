@@ -5,7 +5,7 @@ class Reward:
         self.rf_dict=rf_dict
         return
 
-    def get_reward(self, state:str, action;str)->int:
+    def get_reward(self, state:str, action:str)->int:
         temp_tuple = (state, action)
         return self.rf_dict[temp_tuple]
         
