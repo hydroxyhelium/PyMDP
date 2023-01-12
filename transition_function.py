@@ -13,7 +13,11 @@ class TF:
 
     def get_transition_values(self, state1:'str', action: 'str', state2: 'str') -> int:
         transition_matrix_action = self.tf_matrix_hashmap[action]
-        
+        row = self.order[state1]
+        column = self.order[state2]
 
-        return 0 
+        return transition_matrix_action[row][column]
+
+
+
     
