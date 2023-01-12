@@ -46,7 +46,7 @@ class MDP:
             hashmap[index]= value         
 
         ## we generate a DP table
-        dp_table = [ [0 for i in range(len(state_list))] for j in range(horizon+1)]
+        dp_table = np.array([ [0 for i in range(len(state_list))] for j in range(horizon+1)]) 
 
         for i in range(1, horizon):
             for j in range(len(state_list)):
@@ -67,5 +67,20 @@ class MDP:
         
         dp_table[horizon][index_associated] = self.r.get_reward(state, p.get_action(state))+final_res_temp  
 
-        return dp_table[horizon][index_associated] 
-    
+        return dp_table[horizon][index_associated]
+
+    def evaulate_policy_infinite(self, p:Policy, state:str) -> int: 
+        ## to evaluate a policy over infinite horizon, we need to solve a system of equations 
+        
+        ## Matrix X would contain all the coefficents of state values to be multiplied to 
+
+        X: np.ndarray = np.zeros([len(self.S), len(self.S)])
+        Y: np.ndarray = np.zeros([len(self.S), 1]) 
+        res: np.ndarray = np.zeros([len(self.S), 1])
+
+        lst = list(self.S)
+        special_index = 0 ## this is the index to which the state we're intrested in gets mapped to 
+
+
+
+        return 0     
