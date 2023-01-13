@@ -101,17 +101,45 @@ class MDP:
 
         return res[special_index][0]
 
-    def find_optimal_policy_finite(state:str, horizon: int)->Policy:
+    def find_optimal_policy_finite(self, state:str, horizon: int)->Policy:
 
         ## given horizon and starting state finds the optimal policy to acculamate greatest number of expected rewards. 
-        ## uses DP
+        ## uses 3-Dim DP table
 
-        optimal_policy = {} ## we start out with an empty dict. 
-         
+        optimal_policy = {} ## we start out with an empty dict.
 
+        state_list = list(self.S)
+        action_list = list(self.A)
+
+        hashmap_states = {}
+        hashmap_actions = {}
+
+        for index, state in enumerate(state_list):
+            hashmap_states[index]=state
+
+        for index, action in enumerate(action_list):
+            hashmap_actions[index]=action
+
+        dp_table = [[[0 for i in range(state_list)] for j in range(action_list)] for k in range(horizon+1)]
+
+        for height in range(horizon+1):
+
+            for action in range(action_list):
+                for state in range(state_list):
+
+                    temp=0 
+                    
+                    for i in range(state_list):
+                        temp_table = [ x[i] for x in dp_table[height-1]]
+                        temp += self.tf.get_transition_values(state_list[state],action_list[action] ,state_list[i])*max(temp_table)    
+                    dp_table[height][action][state]= self.r.get_reward(action_list[action], state_list[state])+temp
 
         
+        temp = np.array(dp_table[horizon]).argmax(axis=0)
 
-        return Policy({})
+        for i in range(len(state_list)):
+            optimal_policy[state_list[i]]=action_list[temp[i]]
+    
+        return Policy({optimal_policy})
 
 
