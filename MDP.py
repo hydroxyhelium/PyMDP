@@ -95,10 +95,23 @@ class MDP:
                     X[i][j]=1
                 
                 else:
-                    X[i][j]= - self.tf.get_transition_values(hashmap[i], p.get_action(hashmap[i], hashmap[j]))
+                    X[i][j]= - self.alpha*self.tf.get_transition_values(hashmap[i], p.get_action(hashmap[i], hashmap[j]))
         
         res = np.linalg.inv(X)@Y
 
-
         return res[special_index][0]
-             
+
+    def find_optimal_policy_finite(state:str, horizon: int)->Policy:
+
+        ## given horizon and starting state finds the optimal policy to acculamate greatest number of expected rewards. 
+        ## uses DP
+
+        optimal_policy = {} ## we start out with an empty dict. 
+         
+
+
+        
+
+        return Policy({})
+
+
