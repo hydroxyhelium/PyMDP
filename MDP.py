@@ -79,8 +79,26 @@ class MDP:
         res: np.ndarray = np.zeros([len(self.S), 1])
 
         lst = list(self.S)
-        special_index = 0 ## this is the index to which the state we're intrested in gets mapped to 
+        special_index = 0 ## this is the index to which the state we're intrested in gets mapped to
+
+        hashmap = {}
+
+        for index,value in enumerate(lst):
+            if(value==state):
+                special_index = index
+            hashmap[index]=value
+
+        for i in range(len(lst)):
+            Y[i][0]=self.r.get_reward(hashmap[i], p.get_action(hashmap[i]))
+            for j in range(len(lst)):
+                if(j==0):
+                    X[i][j]=1
+                
+                else:
+                    X[i][j]= - self.tf.get_transition_values(hashmap[i], p.get_action(hashmap[i], hashmap[j]))
+        
+        res = np.linalg.inv(X)@Y
 
 
-
-        return 0     
+        return res[special_index][0]
+             
