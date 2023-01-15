@@ -12,7 +12,7 @@ random.seed(0)
 
 class MDP:
     ## upon initilization we form a random policy  
-    def __init__(self, S: set, A: set, tf:TF, s0: str, r: Reward, alpha: int) -> None:
+    def __init__(self, S: list, A: list, tf:TF, s0: str, r: Reward, alpha: int) -> None:
         self.S = S 
         self.A = A 
         self.tf = tf
@@ -26,7 +26,7 @@ class MDP:
 
         mapping = {}
 
-        action_list = list(A)
+        action_list = [x for x in self.A]
 
         for state in S:
             mapping[state] = action_list[random.randint(0, len(A)-1)]
@@ -37,24 +37,30 @@ class MDP:
         self.policy = Policy(mapping)
         return
 
-    def evaluate_policy_finite(self, p:Policy, horizon: int, state: str) -> int:
-        state_list = list(self.S)
-
+    def evaluate_policy_finite(self, p:Policy, horizon: int, state: str):
+        state_list = [state for state in self.S]
+        ##print(state_list)
         hashmap = {} ## maps states to integer to construct a DP table
 
         for index, value in enumerate(state_list):
             hashmap[index]= value         
 
         ## we generate a DP table
-        dp_table = np.array([ [0 for i in range(len(state_list))] for j in range(horizon+1)]) 
+        dp_table = [ [0 for i in range(len(state_list))] for j in range(horizon+1)]
+
+        ##print(self.tf.get_transition_values('0','c', '3'))       
 
         for i in range(1, horizon):
             for j in range(len(state_list)):
 
                 temp = 0 
                 for l in range(len(state_list)):
+
+                              
+                    ##print(str(i)+" "+str(hashmap[j])+" "+str(hashmap[l])+" "+str(dp_table[i-1][l])+" "+str(self.tf.get_transition_values(hashmap[j], p.get_action(hashmap[j]), hashmap[l])))
                     temp += self.tf.get_transition_values(hashmap[j], p.get_action(hashmap[j]), hashmap[l])*dp_table[i-1][l]
 
+                ##print("temp "+str(temp+self.r.get_reward(hashmap[j], p.get_action(hashmap[j]))))
                 dp_table[i][j] = self.r.get_reward(hashmap[j], p.get_action(hashmap[j]))+temp
 
         
@@ -63,13 +69,15 @@ class MDP:
         final_res_temp = 0
 
         for i in range(len(state_list)):
-            final_res_temp =  self.tf.get_transition_values(state, p.get_action(state), hashmap[i])*dp_table[horizon-1][i]
+            ##print(dp_table[horizon-1][i]*self.tf.get_transition_values(state, p.get_action(state), hashmap[i]))
+            final_res_temp +=  self.tf.get_transition_values(state, p.get_action(state), hashmap[i])*dp_table[horizon-1][i]
         
         dp_table[horizon][index_associated] = self.r.get_reward(state, p.get_action(state))+final_res_temp  
 
+        
         return dp_table[horizon][index_associated]
 
-    def evaulate_policy_infinite(self, p:Policy, state:str) -> int: 
+    def evaulate_policy_infinite(self, p:Policy, state:str): 
         ## to evaluate a policy over infinite horizon, we need to solve a system of equations 
         
         ## Matrix X would contain all the coefficents of state values to be multiplied to 
