@@ -6,6 +6,7 @@ from policy import Policy
 import random
 
 import numpy as np
+import copy
 
 random.seed(0)
 
@@ -149,5 +150,48 @@ class MDP:
             optimal_policy[state_list[i]]=action_list[temp[i]]
     
         return Policy({optimal_policy})
+
+    def find_optimal_policy_infinite(self, epsilon):
+        ## optimal_policy in case of infinte horizon would be a stationary. 
+        hashmap = {}
+
+        for i in (self.S):
+            for j in (self.A):
+                hashmap[(i,j)]=0
+
+        old_hashmap = copy.deepcopy(hashmap) 
+
+
+        all_tuples = []
+
+        for i in self.S:
+            for j in self.A:
+                all_tuples.append((i,j))
+
+        while True:
+            for i in (self.S):
+                for j in (self.A):
+
+                    temp = 0 
+
+                    for l in (self.S):
+                        temp += self.alpha*self.tf(i, j, l)*max([old_hashmap[(l, x)] for x in self.A])
+
+
+                    hashmap[(i,j)]=self.r(i, j)+temp
+                        
+
+            if(max([abs(hashmap[x]-old_hashmap[x]) for x in all_tuples]) < epsilon):
+
+                policy_mapping = {}
+
+                for state in self.S:
+                    array_values = np.array([hashmap[(state, action)] for action in self.A])
+                    index_highest = np.argmax(array_values)
+                    policy_mapping[state]=self.A[index_highest]
+
+                return Policy(policy_mapping) 
+
+            old_hashmap = copy.deepcopy(hashmap)
 
 

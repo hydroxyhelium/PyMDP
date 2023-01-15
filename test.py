@@ -36,6 +36,10 @@ policy_mapping = {'0':'c', '1':'c', '2':'c', '3':'c'}
 p = Policy(policy_mapping)
 
 print(mdp.evaluate_policy_finite(p,2,'1'))
+## this should print 1.1 which it does. 
+
+
+
 
 
 
