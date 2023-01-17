@@ -2,6 +2,9 @@
 from typing import TypedDict
 import numpy as np
 
+
+## order is a mapping from state->transition function 
+
 class TF: 
     ## TF class can be initilized with transition matrix for each of the actions. 
     ## By default all the states would be from 0-(N-1). 
