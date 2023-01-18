@@ -21,6 +21,9 @@ df_spark_actions.show()
 df_spark_states = spark.read.option('header', 'true').csv('states.csv')
 df_spark_states.show() 
 
+df_spark_tf = spark.read.option('header', 'true').option("inferSchema", 'true').csv('tf_b.csv')
+df_spark_tf.show()
+
 @udf(returnType=StringType())
 def convert_states(s):
   return str(s)
