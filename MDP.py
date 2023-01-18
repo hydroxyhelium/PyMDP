@@ -10,7 +10,6 @@ import copy
 
 random.seed(0)
 
-
 class MDP:
     ## upon initilization we form a random policy  
     def __init__(self, S: list, A: list, tf:TF, s0: str, r: Reward, alpha: int) -> None:

@@ -15,4 +15,7 @@ I plan to make my own implementation of RL modules in the future.
 - [x] Implementation of a value-iteration algorithm for Optimal Policy calculation in case of infinite horizon.
 - [ ] using multithreading and parrallel computing for calculations of Optimal Policy.
 - [x] Test cases to verify correctness in case of finite Horizon.
-- [ ] Build Data Pipeline using PySpark and PyMongo.
+- [x] Build custom transformers for states, actions, and transition function matrix in PySpark. 
+- [x] Build custom estimator for calculation of optimal policy. 
+- [ ] Set up MongoDB clusters, to store data. 
+- [ ] Build full data pipeline using PySpark and PyMongo.
