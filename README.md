@@ -17,5 +17,5 @@ I plan to make my own implementation of RL modules in the future.
 - [x] Test cases to verify correctness in case of finite Horizon.
 - [x] Build custom transformers for states, actions, and transition function matrix in PySpark. 
 - [x] Build custom estimator for calculation of optimal policy. 
-- [ ] Set up MongoDB clusters, to store data. 
+- [x] Set up MongoDB clusters, to store data. 
 - [ ] Build full data pipeline using PySpark and PyMongo.
