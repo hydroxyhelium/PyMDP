@@ -19,4 +19,4 @@ I plan to make my own implementation of RL modules in the future.
 - [x] Build custom transformers for states, actions, and transition function matrix in PySpark. 
 - [x] Build custom estimator for calculation of optimal policy. 
 - [x] Set up MongoDB clusters, to store data. 
-- [ ] Build full data pipeline using PySpark and PyMongo.
+- [x] Build full data pipeline using PySpark. 
