@@ -3,7 +3,7 @@ from typing import TypedDict
 import numpy as np
 
 
-## order is a mapping from state->transition function 
+## order is a mapping from state-> order in the map
 
 class TF: 
     ## TF class can be initilized with transition matrix for each of the actions. 

@@ -13,7 +13,8 @@ I plan to make my own implementation of RL modules in the future.
 - [x] Implementation of a general reward function.
 - [x] Implementation of a DP algorithm for calculating non-stationary Optimal Policy in case of finite horizon.
 - [x] Implementation of a value-iteration algorithm for Optimal Policy calculation in case of infinite horizon.
-- [ ] using multithreading and parrallel computing for calculations of Optimal Policy.
+- [x] Read in transition function from CSV file and Converting to TF class object.
+- [ ] Using multithreading and parrallel computing for calculations of Optimal Policy.
 - [x] Test cases to verify correctness in case of finite Horizon.
 - [x] Build custom transformers for states, actions, and transition function matrix in PySpark. 
 - [x] Build custom estimator for calculation of optimal policy. 

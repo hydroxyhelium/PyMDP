@@ -24,6 +24,26 @@ df_spark_states.show()
 df_spark_tf = spark.read.option('header', 'true').option("inferSchema", 'true').csv('tf_b.csv')
 df_spark_tf.show()
 
+df_spark_tf = spark.read.option('header', 'true').option("inferSchema", 'true').csv('tf_b.csv')
+pd_frame_tf =df_spark_tf.toPandas()
+
+""" 
+This part converts a spark dataframe object to pandas and
+makes the transition function, orderering required to make TF object
+"""
+
+length = len(df_spark_tf.dtypes) 
+order = {}
+
+arr = [[0 for i in range(length)] for i in range(length)]
+
+
+for i in range(length):
+  order[df_spark_tf.dtypes[i][0]] = i
+  for j in range(length):
+    arr[i][j]=pd_frame_tf[df_spark_tf.dtypes[i][0]][j]
+
+
 @udf(returnType=StringType())
 def convert_states(s):
   return str(s)
@@ -98,6 +118,9 @@ class ActionTransformer(Transformer, HasInputCol, HasOutputCol, DefaultParamsRea
     output_col = self.get_output_col()
 
     return df.withColumn(output_col, convert_actions(input_col))
+
+
+
 
 
 
