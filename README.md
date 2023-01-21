@@ -5,6 +5,7 @@ Hello there! This would be a simple and straightforward implementation of a gene
 Almost all problems in Reinforcement Learning are theoretically modelled as maximizing the return in a Markov Decision Process.
 
 I plan to make my own implementation of RL modules in the future.
+Right now I'm trying to integrate this project with PyMongo. 
 
 ## Here are the things left to do:-
 
